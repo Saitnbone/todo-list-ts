@@ -1,10 +1,10 @@
-# Проектная работа "Веб-ларек"
+# Проектная работа "ToDo-List TypeScript"
 
-Стек: HTML, SCSS, TS, Webpack
+Стек: HTML, CSS, JS, TS, Webpack
 
 Структура проекта:
 - src/ — исходные файлы проекта
-- src/components/ — папка с JS компонентами
+- src/components/ — папка с JS/TS компонентами
 - src/components/base/ — папка с базовым кодом
 
 Важные файлы:
