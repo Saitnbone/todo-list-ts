@@ -1,6 +1,10 @@
-// Класс элемента разметки
+// Импорты
+import { IItem } from "../types";
 
+// Класс элемента разметки
+// Слой представления отвечает за отображение результата пользователю
 export class Item {
+  protected _id: string;
   protected itemElement: HTMLElement;
   protected title: HTMLElement;
 
@@ -13,8 +17,25 @@ export class Item {
     ) as HTMLElement;
   }
 
-  render(item: string) {
-    this.title.textContent = item;
+  set id(value: string) {
+    this._id = value;
+  }
+
+  get id(): string {
+    return this._id || "";
+  }
+
+  set name(value: string) {
+    this.title.textContent = value;
+  }
+
+  get name(): string {
+    return this.title.textContent || "";
+  }
+
+  render(item: IItem): HTMLElement {
+    this.name = item.name;
+    this.id = item.id;
     return this.itemElement;
   }
 }
