@@ -19,8 +19,21 @@ export interface IItem {
   name: string;
 }
 
+export interface IViewItem {
+  id: string;
+  name: string;
+  render(item: IItem): HTMLElement;
+  setCopyHandler(handlerCopy: Function): void;
+  setDeleteHandler(handlerDeleteItem: Function): void; 
+}
+
+export interface IViewItemConstructor {
+  new (template: HTMLTemplateElement): IViewItem;
+}
+
 export interface IToDoModel {
   items: IItem[];
   addItem: (data: string) => IItem;
   removeItem: (id: string) => void;
+  getItem: (name: string) => IItem;
 }

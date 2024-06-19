@@ -1,12 +1,17 @@
 // Импорты
 import { IItem } from "../types";
+import { IViewItem } from "../types";
 
 // Класс элемента разметки
 // Слой представления отвечает за отображение результата пользователю
-export class Item {
+export class Item implements IViewItem {
   protected _id: string;
   protected itemElement: HTMLElement;
   protected title: HTMLElement;
+  protected copyButton: HTMLButtonElement;
+  protected deleteButton: HTMLButtonElement;
+  protected handleCopyItem: Function;
+  protected handlerDeleteItem: Function;
 
   constructor(template: HTMLTemplateElement) {
     this.itemElement = template.content
@@ -15,6 +20,8 @@ export class Item {
     this.title = this.itemElement.querySelector(
       ".todo-item__text"
     ) as HTMLElement;
+    this.copyButton = this.itemElement.querySelector(".todo-item__copy");
+    this.deleteButton = this.itemElement.querySelector(".todo-item__del");
   }
 
   set id(value: string) {
@@ -31,6 +38,20 @@ export class Item {
 
   get name(): string {
     return this.title.textContent || "";
+  }
+
+  setCopyHandler(handleCopyItem: Function) {
+    this.handleCopyItem = handleCopyItem;
+    this.copyButton.addEventListener("click", (event) => {
+      this.handleCopyItem(this);
+    });
+  }
+
+  setDeleteHandler(handlerDeleteItem: Function) {
+    this.handlerDeleteItem = handlerDeleteItem;
+    this.deleteButton.addEventListener("click", (event) => {
+      this.handlerDeleteItem(this);
+    });
   }
 
   render(item: IItem): HTMLElement {

@@ -1,6 +1,10 @@
 // Импорты
 import { IForm } from "../types";
 
+export interface IFormConstructor {
+  new (formTemplate: HTMLTemplateElement): IForm;
+}
+
 // Слой представления отвечает за отображение результата пользователю
 export class Form implements IForm {
   protected formElement: HTMLFormElement;

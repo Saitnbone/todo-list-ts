@@ -1,6 +1,7 @@
 import { IPage } from "../types";
 
 // Класс для страницы приложения
+// Слой представления 
 export class Page implements IPage {
   _formContainer: HTMLElement;
   _toDoContainer: HTMLElement;
