@@ -24,7 +24,8 @@ export interface IViewItem {
   name: string;
   render(item: IItem): HTMLElement;
   setCopyHandler(handlerCopy: Function): void;
-  setDeleteHandler(handlerDeleteItem: Function): void; 
+  setDeleteHandler(handlerDeleteItem: Function): void;
+  setEditHandler(handleCopyItem: Function): void;
 }
 
 export interface IViewItemConstructor {
@@ -36,4 +37,11 @@ export interface IToDoModel {
   addItem: (data: string) => IItem;
   removeItem: (id: string) => void;
   getItem: (name: string) => IItem;
+  editItem: (id: string, name: string) => void;
+}
+
+export interface IPopup {
+  content: HTMLElement;
+  open(): void;
+  close(): void;
 }

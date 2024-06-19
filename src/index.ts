@@ -8,6 +8,7 @@ import { Form } from "./components/Form";
 import { ToDoModel } from "./components/ToDoModel";
 import { Page } from "./components/Page";
 import { ItemPresenter } from "./components/ToDoPresenter";
+import { Popup } from "./components/Popup";
 
 // DOM-узлы
 const contentElement = document.querySelector(".content") as HTMLElement;
@@ -19,7 +20,9 @@ const page = new Page(contentElement);
 const todoArray = new ToDoModel();
 todoArray.items = todos;
 
-const itemPresenter = new ItemPresenter(todoArray, Form, page, Item);
+const modal = new Popup(popupElement)
+
+const itemPresenter = new ItemPresenter(todoArray, Form, page, Item, modal);
 
 itemPresenter.init();
 itemPresenter.renderView();
