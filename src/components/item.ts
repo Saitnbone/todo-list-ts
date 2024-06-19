@@ -1,21 +1,20 @@
 // Импорты
 import { IItem } from "../types";
 import { IViewItem } from "../types";
+import { EventEmitter } from "./EventEmmiter";
 
 // Класс элемента разметки
 // Слой представления отвечает за отображение результата пользователю
-export class Item implements IViewItem {
+export class Item extends EventEmitter implements IViewItem {
   protected _id: string;
   protected itemElement: HTMLElement;
   protected title: HTMLElement;
   protected copyButton: HTMLButtonElement;
   protected deleteButton: HTMLButtonElement;
   protected editButton: HTMLButtonElement;
-  protected handleCopyItem: Function;
-  protected handlerDeleteItem: Function;
-  protected handleEditItem: Function;
 
   constructor(template: HTMLTemplateElement) {
+    super();
     this.itemElement = template.content
       .querySelector(".todo-item")
       .cloneNode(true) as HTMLElement;
@@ -25,6 +24,16 @@ export class Item implements IViewItem {
     this.copyButton = this.itemElement.querySelector(".todo-item__copy");
     this.deleteButton = this.itemElement.querySelector(".todo-item__del");
     this.editButton = this.itemElement.querySelector(".todo-item__edit");
+
+    this.deleteButton.addEventListener("click", () =>
+      this.emit("delete", { id: this._id })
+    );
+    this.copyButton.addEventListener("click", () =>
+      this.emit("copy", { id: this._id })
+    );
+    this.editButton.addEventListener("click", () =>
+      this.emit("edit", { id: this._id })
+    );
   }
 
   set id(value: string) {
@@ -41,27 +50,6 @@ export class Item implements IViewItem {
 
   get name(): string {
     return this.title.textContent || "";
-  }
-
-  setCopyHandler(handleCopyItem: Function) {
-    this.handleCopyItem = handleCopyItem;
-    this.copyButton.addEventListener("click", (event) => {
-      this.handleCopyItem(this);
-    });
-  }
-
-  setDeleteHandler(handlerDeleteItem: Function) {
-    this.handlerDeleteItem = handlerDeleteItem;
-    this.deleteButton.addEventListener("click", (event) => {
-      this.handlerDeleteItem(this);
-    });
-  }
-
-  setEditHandler(handleEditItem: Function) {
-    this.handleEditItem = handleEditItem;
-    this.editButton.addEventListener("click", (event) => {
-      this.handleEditItem(this);
-    });
   }
 
   render(item: IItem): HTMLElement {

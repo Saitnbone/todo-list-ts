@@ -1,18 +1,20 @@
 // Импорты
 import { IForm } from "../types";
+import { EventEmitter } from "./EventEmmiter";
 
 export interface IFormConstructor {
   new (formTemplate: HTMLTemplateElement): IForm;
 }
 
 // Слой представления отвечает за отображение результата пользователю
-export class Form implements IForm {
+export class Form extends EventEmitter implements IForm {
   protected formElement: HTMLFormElement;
   protected inputElement: HTMLInputElement;
   protected handleFormSubmit: Function;
   protected submitButton: HTMLButtonElement;
 
   constructor(formTemplate: HTMLTemplateElement) {
+    super();
     this.formElement = formTemplate.content
       .querySelector(".todos__form")
       .cloneNode(true) as HTMLFormElement;
@@ -20,12 +22,8 @@ export class Form implements IForm {
     this.submitButton = this.formElement.querySelector(".todo-form__input-btn");
     this.formElement.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.handleFormSubmit(this.inputElement.value);
+      this.emit("submit", { value: this.inputElement.value });
     });
-  }
-
-  setHandler(handleFormSubmit: Function) {
-    this.handleFormSubmit = handleFormSubmit;
   }
 
   // Рендеринг результата

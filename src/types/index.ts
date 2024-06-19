@@ -1,13 +1,15 @@
+// Импорты
+import { IEvents } from "../components/EventEmmiter";
+
 // Интерфесы для проекта
 export interface IPage {
   formContainer: HTMLElement;
   toDoContainer: HTMLElement[] | null;
 }
 
-export interface IForm {
+export interface IForm extends IEvents {
   buttonText: string;
   placeholder: string;
-  setHandler(handleFormSubmit: Function): void;
   render(): HTMLFormElement;
   setValue(data: string): void;
   getValue(): string;
@@ -19,20 +21,17 @@ export interface IItem {
   name: string;
 }
 
-export interface IViewItem {
+export interface IViewItem extends IEvents {
   id: string;
   name: string;
   render(item: IItem): HTMLElement;
-  setCopyHandler(handlerCopy: Function): void;
-  setDeleteHandler(handlerDeleteItem: Function): void;
-  setEditHandler(handleCopyItem: Function): void;
 }
 
 export interface IViewItemConstructor {
   new (template: HTMLTemplateElement): IViewItem;
 }
 
-export interface IToDoModel {
+export interface IToDoModel extends IEvents{
   items: IItem[];
   addItem: (data: string) => IItem;
   removeItem: (id: string) => void;
